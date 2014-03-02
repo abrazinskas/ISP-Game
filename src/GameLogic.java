@@ -48,8 +48,6 @@ public class GameLogic implements IGameLogic {
     /* Support Methods */
 
     private boolean columnIsFull(int[][] ar, int col) {
-
-        //System.out.println("the size of array is:"+ ar[col].length);
         if (ar[col][ar[col].length - 1] != 0) return true;
         return false;
     }

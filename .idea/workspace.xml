@@ -98,7 +98,7 @@
       <file leaf-file-name="GameLogic.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="38" selection-start="550" selection-end="550" vertical-scroll-proportion="-0.39405206">
+            <state line="41" column="58" selection-start="1091" selection-end="1091" vertical-scroll-proportion="0.330855">
               <folding />
             </state>
           </provider>
@@ -309,7 +309,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2496361" sideWeight="0.7916084" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2083916" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2083916" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -444,7 +444,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="38" selection-start="550" selection-end="550" vertical-scroll-proportion="-0.39405206">
+        <state line="41" column="58" selection-start="1091" selection-end="1091" vertical-scroll-proportion="0.330855">
           <folding />
         </state>
       </provider>
