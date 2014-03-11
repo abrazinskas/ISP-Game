@@ -31,7 +31,7 @@ public class ShowGame
     {
         IGameLogic player1 = null;
         IGameLogic player2 = null;
-        int cols = 3;
+        int cols = 4;
         int rows = 6;
         
         boolean err = args.length < 2;
