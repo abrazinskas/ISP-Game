@@ -38,7 +38,12 @@ public class GameLogic implements IGameLogic {
 
 
         // return checkWin(Winner.PLAYER2, 2);
-        return checkWin(Winner.PLAYER1, 1);
+
+        if (hasWon(1, board)) return Winner.PLAYER1;
+        if (hasWon(2, board)) return Winner.PLAYER2;
+        return Winner.NOT_FINISHED;
+
+        //return checkWin(1);
 
         //  return Winner.NOT_FINISHED;
 
@@ -69,41 +74,68 @@ public class GameLogic implements IGameLogic {
         //TODO Write your implementation for this method
 
 
-        return minimax_decision(board);
-    }
-
-
-    private int minimax_decision(int[][] ar) {
-
+        System.out.println("my decision value is:"+minimax_decision(board));
+        //return minimax_decision(board);
         return 0;
-    }
 
-    private int max_value(int[][] ar) {
-
-        return 0;
-    }
-
-    private int min_value(int[][] ar) {
-        return 0;
-    }
-
-    private boolean terminalState() {
-
-        return true;
     }
 
 
-    // 1 - win, -1 - lose , 0 - draw
-    private int utility() {
+    private int minimax_decision(int[][] board) {
+        int v = max_value(board);
+        return v;
 
-        return 1;
+
+    }
+
+    private int max_value(int[][] board) {
+
+        int v, savedValue, freeSpot;
+        v = utility(board);
+        if (v != -999) return v; //if state is terminal
+        for (int col = 0; col < board.length; col++) {
+            freeSpot = freeSpot(board, col);
+            if (freeSpot != -1) {
+                savedValue = board[col][freeSpot];
+                board[col][freeSpot]=1;
+                v = Math.max(v, min_value(board));
+                board[col][freeSpot]=savedValue;
+            }
+        }
+        return v;
+    }
+
+    private int min_value(int[][] board) {
+        int v, savedValue, freeSpot;
+        v = utility(board);
+        if (v != -999) return v; //if state is terminal
+        for (int col = 0; col < board.length; col++) {
+            freeSpot = freeSpot(board, col);
+            if (freeSpot != -1) {
+                System.out.println("placing a coin to: "+col);
+                savedValue = board[col][freeSpot];
+                board[col][freeSpot]=2;
+                v = Math.min(v, max_value(board));
+                board[col][freeSpot]=savedValue;
+            }
+        }
+        return v;
+    }
+
+
+    // 100 - win, -100 - lose , 0 - draw , -999 -default| no utility value so far
+    private int utility(int[][] board) {
+
+        if (hasWon(1, board)) return 100;
+        if (hasWon(2, board)) return -100;
+        if (isTie(board)) return 0;
+
+        return -999;
     }
 
 
 
     /* Support Methods */
-
-    //TODO insert a coin into last free column cell in a board array
 
 
     private boolean columnIsFull(int[][] ar, int col) {
@@ -111,7 +143,20 @@ public class GameLogic implements IGameLogic {
         return false;
     }
 
-    private Winner checkWin(Winner player, int playerID) {
+    private boolean isTie(int[][] gameBoard) {
+        boolean tiegame = true;
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (board[col][row] == 0) tiegame = false;
+            }
+        }
+        return tiegame;
+    }
+
+
+    // true is returned if playerID has won. false - if not, IT DOES NOT MEAN AUTOMATICALLY THAT HE LOST. it means that
+    // current positions of coins don't make playerID a winner.
+    private boolean hasWon(int playerID, int[][] board) {
 
 
         int[] h_count = new int[board[0].length];
@@ -126,19 +171,20 @@ public class GameLogic implements IGameLogic {
                     v_count = 0;
                     h_count[j] = 0;
                 }
-                if (v_count >= 4 ||h_count[j]>=4) return player;
+                System.out.println("column: "+i+"v_count: "+v_count);
+                System.out.println("h_count j: "+j+" "+h_count[j]);
+                if (v_count >= 4 || h_count[j] >= 4) return true;
             }
         }
 
 // diagonal lower left to upper right
         for (int col = 0; col < this.cols - 3; col++)
             for (int row = 0; row < this.rows - 3; row++)
-
                 if (board[col][row] > 0
-                                && board[col][row] == board[col + 1][row + 1]
-                                && board[col][row] == board[col + 2][row + 2]
-                                && board[col][row] == board[col + 3][row + 3])
-                    return player;
+                        && board[col][row] == board[col + 1][row + 1]
+                        && board[col][row] == board[col + 2][row + 2]
+                        && board[col][row] == board[col + 3][row + 3])
+                    return true;
 
 // diagonal upper left to lower right
         for (int row = this.rows - 1; row >= 3; row--)
@@ -147,14 +193,14 @@ public class GameLogic implements IGameLogic {
                         && board[col][row] == board[col + 1][row - 1]
                         && board[col][row] == board[col + 2][row - 2]
                         && board[col][row] == board[col + 3][row - 3])
-                    return player;
+                    return true;
 
-        return Winner.NOT_FINISHED;
+        return false;
     }
 
     private int freeSpot(int[][] ar, int column) {
 
-        for (int i = 0; i < ar[column].length - 1; i++) {
+        for (int i = 0; i < ar[column].length; i++) {
             if (ar[column][i] == 0) return i;
         }
 
