@@ -71,55 +71,71 @@ public class GameLogic implements IGameLogic {
 
 
     public int decideNextMove() {
-        //TODO Write your implementation for this method
-
-
-        System.out.println("my decision value is:"+minimax_decision(board));
-        //return minimax_decision(board);
-        return 0;
+       // System.out.println("my decision value is:"+minimax_decision(board));
+        return minimax_decision(board);
 
     }
 
 
     private int minimax_decision(int[][] board) {
-        int v = max_value(board);
-        return v;
+        int[] result = min_value(board);
+        System.out.println("min value is: "+result[0]);
+        return result[1];
 
 
     }
 
-    private int max_value(int[][] board) {
-
+    private int[] max_value(int[][] board) {
         int v, savedValue, freeSpot;
+        int[] state_values=new int[]{-999,0}; // 0-utility value  1 - path
+        int[] new_state_values;
         v = utility(board);
-        if (v != -999) return v; //if state is terminal
+        if (v != -999) return new int[]{v,0}; //if state is terminal
+
         for (int col = 0; col < board.length; col++) {
             freeSpot = freeSpot(board, col);
             if (freeSpot != -1) {
                 savedValue = board[col][freeSpot];
                 board[col][freeSpot]=1;
-                v = Math.max(v, min_value(board));
+
+                new_state_values = min_value(board);
+
+                if(state_values[0]< new_state_values[0])
+                state_values=new_state_values;
+
+                state_values[1]=col;
+
                 board[col][freeSpot]=savedValue;
             }
         }
-        return v;
+        return state_values;
     }
 
-    private int min_value(int[][] board) {
+    private int[] min_value(int[][] board) {
         int v, savedValue, freeSpot;
+        int[] state_values=new int[]{999,0}; // 0-utility value  1 - path
+        int[] new_state_values;
+
         v = utility(board);
-        if (v != -999) return v; //if state is terminal
+        if (v != -999) return new int[]{v,0}; //if state is terminal
         for (int col = 0; col < board.length; col++) {
             freeSpot = freeSpot(board, col);
             if (freeSpot != -1) {
-                System.out.println("placing a coin to: "+col);
+                //System.out.println("placing a coin to: "+col);
                 savedValue = board[col][freeSpot];
                 board[col][freeSpot]=2;
-                v = Math.min(v, max_value(board));
+
+                new_state_values = min_value(board);
+
+                if(state_values[0]> new_state_values[0])
+                    state_values=new_state_values;
+
+                state_values[1]=col;
+
                 board[col][freeSpot]=savedValue;
             }
         }
-        return v;
+        return state_values;
     }
 
 
@@ -171,8 +187,8 @@ public class GameLogic implements IGameLogic {
                     v_count = 0;
                     h_count[j] = 0;
                 }
-                System.out.println("column: "+i+"v_count: "+v_count);
-                System.out.println("h_count j: "+j+" "+h_count[j]);
+                //System.out.println("column: "+i+"v_count: "+v_count);
+                //System.out.println("h_count j: "+j+" "+h_count[j]);
                 if (v_count >= 4 || h_count[j] >= 4) return true;
             }
         }

@@ -4,8 +4,8 @@
     <list default="true" id="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" name="Default" comment="" />
     <ignored path="project.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/fragment.java" changelist="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" time="1394660304186" ignored="false" />
-    <file path="/GameLogic.java" changelist="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" time="1394659398611" ignored="false" />
+    <file path="/fragment.java" changelist="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" time="1394664517606" ignored="false" />
+    <file path="/GameLogic.java" changelist="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" time="1394664493141" ignored="false" />
     <file path="/FourConnectGUI.java" changelist="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" time="1393862366314" ignored="false" />
     <file path="/ShowGame.java" changelist="d2c2856e-3b60-4b67-9c2e-5ff74a13cfd2" time="1394376461252" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,6 +62,25 @@
     <breakpoint_rules />
     <ui_properties />
   </component>
+  <component name="DockManager">
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="test.java" pinned="false" current="false" current-in-tab="true">
+              <entry file="file://$USER_HOME$/Desktop/test.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state line="144" column="115" selection-start="4860" selection-end="4860" vertical-scroll-proportion="1.6202091">
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="project" />
@@ -98,7 +117,7 @@
       <file leaf-file-name="GameLogic.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="98" column="21" selection-start="2406" selection-end="2406" vertical-scroll-proportion="0.5962343">
+            <state line="73" column="9" selection-start="1779" selection-end="1779" vertical-scroll-proportion="-0.95652175">
               <folding />
             </state>
           </provider>
@@ -129,13 +148,14 @@
         <option value="$PROJECT_DIR$/src/FourConnectGUI.java" />
         <option value="$PROJECT_DIR$/src/ShowGame.java" />
         <option value="$PROJECT_DIR$/src/test.java" />
+        <option value="$USER_HOME$/Desktop/test.java" />
         <option value="$PROJECT_DIR$/src/GameLogic.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="242" />
-    <option name="y" value="29" />
+    <option name="x" value="73" />
+    <option name="y" value="22" />
     <option name="width" value="1288" />
     <option name="height" value="812" />
   </component>
@@ -257,7 +277,7 @@
     <configuration default="false" name="ShowGame" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="ShowGame" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="human GameLogic 2 2" />
+      <option name="PROGRAM_PARAMETERS" value="human GameLogic 4 6" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -312,8 +332,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="242" y="29" width="1288" height="812" extended-state="0" />
-    <editor active="false" />
+    <frame x="73" y="22" width="1288" height="812" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -328,8 +348,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16827697" sideWeight="0.7076923" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2923077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16827697" sideWeight="0.6181818" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38181818" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -472,13 +492,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.4363904" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../programming/java_projects/ISP Project/GameLogic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="120" selection-start="605" selection-end="605" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/IGameLogic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="9" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0">
@@ -502,9 +515,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../programming/java_projects/ISP Project/GameLogic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="120" selection-start="605" selection-end="605" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="144" column="115" selection-start="4860" selection-end="4860" vertical-scroll-proportion="1.6202091">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GameLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="21" selection-start="2406" selection-end="2406" vertical-scroll-proportion="0.5962343">
+        <state line="73" column="9" selection-start="1779" selection-end="1779" vertical-scroll-proportion="-0.95652175">
           <folding />
         </state>
       </provider>
