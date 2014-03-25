@@ -14,7 +14,6 @@
 
 
 import javax.swing.*;
-import java.net.URLClassLoader;
 import java.lang.reflect.*;
 
 public class ShowGame
@@ -31,7 +30,7 @@ public class ShowGame
     {
         IGameLogic player1 = null;
         IGameLogic player2 = null;
-        int cols = 4;
+        int cols = 7;
         int rows = 6;
         
         boolean err = args.length < 2;
@@ -119,7 +118,7 @@ public class ShowGame
      * @throws TBD
      * @returns IGameLogic if a class was specified, null if human was specified
      */
-    public static IGameLogic parseGameLogicParam(String cmdParam) 
+    public static IGameLogic parseGameLogicParam(String cmdParam)
             throws ClassNotFoundException, NoSuchMethodException, 
                    InstantiationException, IllegalAccessException,
                    InvocationTargetException {

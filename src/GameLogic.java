@@ -4,171 +4,179 @@ public class GameLogic implements IGameLogic {
     private int rows;
     private int playerID;
 
-    // player blue - 1 player red - 2(AI)
+    private int oppID; //opponents ID
 
     private int[][] board;  // matrix for coins coordinates // values are id's of players
+    private int[] currentSize; // the number of coins in each column
 
-    public GameLogic() {
-        //TODO Write your implementation for this method
-    }
+    private final int OPEN_SQUARE = 0;
+    private final int MAXDEPTH = 3;
 
     public void initializeGame(int x, int y, int playerID) {
-        //TODO Write your implementation for this method
+
         cols = x;
         rows = y;
-        playerID = playerID;
+        this.playerID = playerID;
+        oppID = 3 - playerID;
+
+      //  System.out.println("player id is: " + playerID);
         board = new int[cols][rows];
+        currentSize = new int[cols];
 
-        System.out.println(playerID);
-        System.out.println("Game initialized");
-
-    }
-
-    public Winner gameFinished() {
-        //TODO Write your implementation for this method
-
-
-        //for player 1 and player 2
-
-
-//        System.out.println("playerid "+playerID);
-
-//        if(playerID==1) return checkWin(Winner.PLAYER1, 1);
-//        else return checkWin(Winner.PLAYER2, 2);
-
-
-        // return checkWin(Winner.PLAYER2, 2);
-
-        if (hasWon(1, board)) return Winner.PLAYER1;
-        if (hasWon(2, board)) return Winner.PLAYER2;
-        return Winner.NOT_FINISHED;
-
-        //return checkWin(1);
-
-        //  return Winner.NOT_FINISHED;
+      //  System.out.println("Game initialized");
 
     }
 
 
     public void insertCoin(int column, int playerID) {
-        //TODO Write your implementation for this method
 
-        System.out.println("insert coin");
-        int spot = freeSpot(board, column);
+        board[column][currentSize[column]] = playerID;
+        currentSize[column]++;
 
-        System.out.println("spot is:" + spot);
-        if (spot != -1) {
-            board[column][spot] = playerID;
+        //System.out.println("Coin inserted in column " + column+ " by a player "+playerID);
+    }
 
-            System.out.println("player id" + playerID);
-
-            System.out.println("Coin inserted in column " + column);
-
-        } else System.out.println("no free spots");
-
-
+    private void removeCoin(int column) {
+        board[column][currentSize[column] - 1] = 0;
+        currentSize[column]--;
     }
 
 
     public int decideNextMove() {
-       // System.out.println("my decision value is:"+minimax_decision(board));
-        return minimax_decision(board);
-
-    }
 
 
-    private int minimax_decision(int[][] board) {
-        int[] result = min_value(board);
-        System.out.println("min value is: "+result[0]);
-        return result[1];
+        return miniMax(board);
 
 
     }
 
-    private int[] max_value(int[][] board) {
-        int v, savedValue, freeSpot;
-        int[] state_values=new int[]{-999,0}; // 0-utility value  1 - path
-        int[] new_state_values;
-        v = utility(board);
-        if (v != -999) return new int[]{v,0}; //if state is terminal
+    private int miniMax(int[][] board) {
+        int alpha = -999999;
+        int beta = 999999;
 
-        for (int col = 0; col < board.length; col++) {
-            freeSpot = freeSpot(board, col);
-            if (freeSpot != -1) {
-                savedValue = board[col][freeSpot];
-                board[col][freeSpot]=1;
+        int result = 0;
+        int value;
 
-                new_state_values = min_value(board);
 
-                if(state_values[0]< new_state_values[0])
-                state_values=new_state_values;
+        Stopwatch timer= new Stopwatch();
 
-                state_values[1]=col;
 
-                board[col][freeSpot]=savedValue;
+        for (int i = 0; i < cols; i++) {
+            if (columnIsFull(board, i) != true) {
+                insertCoin(i, playerID);
+                value = minMove(board, 1, alpha, beta);
+                removeCoin(i);
+                if (value >= alpha) {
+
+                    alpha = Math.max(alpha, value);
+                    result = i;
+                }
             }
         }
-        return state_values;
+        System.out.println("time elapsed: "+timer.elapsedTime());
+        return result;
     }
 
-    private int[] min_value(int[][] board) {
-        int v, savedValue, freeSpot;
-        int[] state_values=new int[]{999,0}; // 0-utility value  1 - path
-        int[] new_state_values;
+    private int maxMove(int[][] board, int depth, int alpha, int beta) {
 
-        v = utility(board);
-        if (v != -999) return new int[]{v,0}; //if state is terminal
-        for (int col = 0; col < board.length; col++) {
-            freeSpot = freeSpot(board, col);
-            if (freeSpot != -1) {
-                //System.out.println("placing a coin to: "+col);
-                savedValue = board[col][freeSpot];
-                board[col][freeSpot]=2;
+        //cut-off test
+        if (depth >= MAXDEPTH || terminalTest()){
+            return evaluate(playerID);
+        }
 
-                new_state_values = min_value(board);
 
-                if(state_values[0]> new_state_values[0])
-                    state_values=new_state_values;
+        int value = -999999;
+        for (int i = 0; i < cols; i++) {
+            if (columnIsFull(board, i) != true) {
 
-                state_values[1]=col;
+                insertCoin(i, playerID);
+                value = Math.max(value, minMove(board, depth++, alpha, beta));
+                removeCoin(i);
 
-                board[col][freeSpot]=savedValue;
+                if (value >= beta) return value;
+                alpha = Math.max(alpha, value);
+
+
             }
         }
-        return state_values;
+        return value;
     }
 
+    private int minMove(int[][] board, int depth, int alpha, int beta) {
 
-    // 100 - win, -100 - lose , 0 - draw , -999 -default| no utility value so far
-    private int utility(int[][] board) {
 
-        if (hasWon(1, board)) return 100;
-        if (hasWon(2, board)) return -100;
-        if (isTie(board)) return 0;
+        //cut-off test
+        if (depth >= MAXDEPTH || terminalTest()) {
+            return evaluate(oppID);
+        }
+        int value = 999999;
 
-        return -999;
+        for (int i = 0; i < cols; i++) {
+            if (columnIsFull(board, i) != true) {
+
+                insertCoin(i, oppID);
+                value = Math.min(value, maxMove(board, depth++, alpha, beta));
+                removeCoin(i);
+
+                //alpha beta cut
+                if (value <= alpha) return value;
+                beta = Math.min(beta, value);
+            }
+        }
+        return value;
     }
-
-
-
+    
     /* Support Methods */
-
 
     private boolean columnIsFull(int[][] ar, int col) {
         if (ar[col][ar[col].length - 1] != 0) return true;
         return false;
     }
 
+
+
+
+    public Winner gameFinished() {
+
+        if (hasWon(playerID, board)) return Winner.PLAYER2;
+        if (hasWon(oppID, board)) return Winner.PLAYER1;
+        if (isTie(board)) return Winner.TIE;
+
+
+        return Winner.NOT_FINISHED;
+
+    }
+
+    // 100 - win, -100 - lose , 0 - draw , -999 -default| no utility value so far // from AI perspective
+//    private int utility(int[][] board) {
+//
+//        if (hasWon(oppID, board)) return -100;
+//        if (hasWon(playerID, board)) return 100;
+//        if (isTie(board)) return 0;
+//
+//        return -999;
+//    }
+
+    private boolean terminalTest(){
+        if (hasWon(oppID, board)) return true;
+        if (hasWon(playerID, board)) return true;
+        if (isTie(board)) return true;
+
+        return false;
+    }
+
+
     private boolean isTie(int[][] gameBoard) {
         boolean tiegame = true;
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        for (int col = 0; col < cols; col++) {
+
+            for (int row = 0; row < rows; row++) {
+
                 if (board[col][row] == 0) tiegame = false;
             }
         }
         return tiegame;
     }
-
 
     // true is returned if playerID has won. false - if not, IT DOES NOT MEAN AUTOMATICALLY THAT HE LOST. it means that
     // current positions of coins don't make playerID a winner.
@@ -188,42 +196,158 @@ public class GameLogic implements IGameLogic {
                     h_count[j] = 0;
                 }
                 //System.out.println("column: "+i+"v_count: "+v_count);
-                //System.out.println("h_count j: "+j+" "+h_count[j]);
-                if (v_count >= 4 || h_count[j] >= 4) return true;
+               // System.out.println("h_count j: "+j+" "+h_count[j]);
+                if (v_count >= 4 || h_count[j] >= 4) {
+                    //System.out.println("horizontal or vertical win");
+                    return true;
+                }
             }
         }
 
-// diagonal lower left to upper right
+        // diagonal upper left to lower right
         for (int col = 0; col < this.cols - 3; col++)
             for (int row = 0; row < this.rows - 3; row++)
-                if (board[col][row] > 0
+                if (board[col][row] != OPEN_SQUARE
                         && board[col][row] == board[col + 1][row + 1]
                         && board[col][row] == board[col + 2][row + 2]
-                        && board[col][row] == board[col + 3][row + 3])
-                    return true;
+                        && board[col][row] == board[col + 3][row + 3]) {
+                    //System.out.println("upper left to lower right win");
+                   return true;
+                }
 
-// diagonal upper left to lower right
-        for (int row = this.rows - 1; row >= 3; row--)
+
+
+
+        // diagonal lower left to upper right
+        for (int row = 3; row<rows; row++)
             for (int col = 0; col < this.cols - 3; col++)
-                if (board[col][row] > 0
+                if (board[col][row] != OPEN_SQUARE
                         && board[col][row] == board[col + 1][row - 1]
                         && board[col][row] == board[col + 2][row - 2]
                         && board[col][row] == board[col + 3][row - 3])
+                {     //System.out.println("lower left to right win");
+                    //System.out.println("order "+board[col][row]+" "+board[col + 1][row - 1]+ " "+board[col + 2][row - 2]+ " "+board[col + 3][row - 3] );
+
                     return true;
+                }
 
         return false;
     }
 
-    private int freeSpot(int[][] ar, int column) {
 
-        for (int i = 0; i < ar[column].length; i++) {
-            if (ar[column][i] == 0) return i;
-        }
+    // EVALUATION based on R. L. Rivest, Game Tree Searching by Min/Max Approximation, AI 34 [1988]
+    protected int evaluate(int pid) {
 
-        return -1; // no spots
+        int row, column;
+        int score = 0;
+
+        // For each possible starting spot, calculate the value of the spot for
+        // a potential four-in-a-row, heading down, left, and to the lower-left.
+
+        // Value moving down(vertical) from each spot:
+        for (row = 3; row < rows; ++row)
+            for (column = 0; column < cols; ++column) {
+                score += value(row, column, -1, 0);
+            }
+
+        // Value moving left(horizontal) from each spot:
+        for (row = 0; row < rows; ++row)
+            for (column = 3; column < cols; ++column)
+                score += value(row, column, 0, -1);
+
+       // Value heading diagonal (lower-left) from each spot:
+        for (row = 3; row < rows; ++row)
+            for (column = 3; column < cols; ++column)
+                score += value(row, column, -1, -1);
+        // Value heading diagonal (lower-right) from each spot:
+        for (row = 3; row < rows; ++row)
+            for (column = 0; column <= cols-4; ++column)
+                score += value(row, column, -1, +1);
+
+
+         if(pid==playerID){
+             score+=16;
+         }else if(pid==oppID) {
+             score-=16;
+         }
+
+        return score;
     }
 
+
+    private int value(int row, int column, int deltar, int deltac) {
+
+        // NOTE: Positive return value is good for the computer.
+        int i;
+        int endRow = row + 3 * deltar;
+        int endColumn = column + 3 * deltac;
+
+
+        int playerCount = 0;
+        int opponentCount = 0;
+
+        if (
+                (row < 0) || (column < 0) || (endRow < 0) || (endColumn < 0)
+                        ||
+                        (row >= rows) || (endRow >= rows)
+                        ||
+                        (column >= cols) || (endColumn >= cols)
+                )
+            return 0;
+
+        for (i = 1; i <= 4; ++i) {
+            if (board[column][row] == playerID)
+            {
+                ++playerCount;
+                opponentCount = 0;
+            } else if(board[column][row] == oppID ){
+                ++opponentCount;
+                playerCount = 0;
+            }
+
+            row += deltar;
+            column += deltac;
+
+        }
+
+        //evaluation of scores based on R.L.Rivest
+        if(playerCount==0 &&opponentCount!=0){
+            switch (opponentCount){
+
+                case 4:
+                    return -512;
+                case 3:
+                    return -50;
+                case 2:
+                    return -10;
+                case 1:
+                    return -1;
+
+            }
+        }
+
+        if(opponentCount==0 &&playerCount!=0){
+            switch (playerCount){
+
+                case 4:
+                    return 512;
+                case 3:
+                    return  50;
+                case 2:
+                    return 10;
+                case 1:
+                    return 1;
+
+            }
+        }
+        return 0;
+    }
+
+
+
+
 }
+
 
 
 
