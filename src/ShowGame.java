@@ -30,7 +30,7 @@ public class ShowGame
     {
         IGameLogic player1 = null;
         IGameLogic player2 = null;
-        int cols = 7;
+        int cols = 6;
         int rows = 6;
         
         boolean err = args.length < 2;
